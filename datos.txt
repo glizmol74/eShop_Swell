@@ -1,0 +1,136 @@
+> laravel new xxx
+
+> cd xxx
+
+> composer require laravel/ui
+
+> php artisan ui vue --auth
+
+> npm install && npm run dev
+
+> npm update vue-loader
+
+> vue add vuetify-cli
+
+> npm install vuetify
+
+> npm install sass@~1.32 sass-loader deepmerge -D
+
+> npm install vuetify-loader
+
+>  // resource/plugins/vuetify.js
+
+import Vue from 'vue'
+import Vuetify from 'vuetify/lib'
+
+Vue.use(Vuetify)
+
+const opts = {}
+
+export default new Vuetify(opts)
+
+
+> npm install vue-i18n
+
+> npm install material-design-icons-iconfont -D
+
+> npm install @mdi/font -D
+
+> // editar vue-i18n en /resource/plugins/vue-i18n
+
+import Vue from 'vue'
+import VueI18n from 'vue-i18n'
+
+Vue.use(VueI18n);
+
+let lang_init = localStorage.getItem('ecommerce-locale')
+if (!lang_init) lang_init = 'es'
+
+const i18n = new VueI18n({
+    messages : {
+     'es': require('./es'),
+     'en': require('./en')
+    }, 
+    locale: lang_init
+
+})
+
+export {i18n}
+
+> npm install vuelidate --save
+
+> npm i vue-moment
+
+> npm i numeral
+
+> npm install vuex --save
+
+> npm i vue-session
+
+> npm i vue-zoom-on-hover
+
+> npm i vue-carousel
+
+> php artisan make:model Sys/Tienda/Empresas -m
+
+> php artisan make:controller Sys/Tienda/EmpresasController --resource
+
+> php artisan make:model Sys/Tienda/Categorias -m
+
+> php artisan make:controller Sys/Tienda/CategoriasController --resource
+
+> php artisan make:model Sys/Tienda/PaginaHome -m
+
+> php artisan make:model Sys/Tienda/ContactForms -m
+
+> php artisan make:mail EmailNuevaConsulta
+
+> php artisan make:mail EmailPedido
+
+> php artisan make:mail EmailNuevoCliente
+
+> php artisan make:mail EmailPedidoSwell
+
+> php artisan vendor:publish --tag=laravel-mail
+
+> php artisan make:model Sys/Tienda/Prodoctos -m
+
+> php artisan make:controller Sys/Tienda/ProductosController
+
+> php artisan make:model Sys/Tienda/Atributos -m
+
+> php artisan make:controller Sys/Tienda/AtributosController
+
+> php artisan make:model Sys/Tienda/Productos_atributos -m
+
+> php artisan make:controller Sys/Tienda/ProductosAtributosController
+
+> npm i vue-pdf
+
+> npm i vue-pdf-print
+
+> php artisan make:model Sys/Backend/Perfiles -m
+
+> php artisan make:controller Sys/Backend/PerfilesController --resource
+
+> php artisan make:model Sys/Backend/Menues -m
+
+> php artisan make:controller Sys/Backend/MenuesController --resource
+
+> php artisan make:model Sys/Backend/Roles -m
+
+> php artisan make:controller Sys/Backend/RolesController --resource
+
+> npm install vue-resource
+
+> npm i vue2-editor
+
+> composer require tymon/jwt-auth
+
+> php artisan make:middleware JWTMiddleware
+
+> php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
+
+> php artisan make:middleware AdminMiddleware
+
+> php artisan jwt:secret

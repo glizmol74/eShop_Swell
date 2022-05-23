@@ -1,0 +1,15 @@
+@extends('layouts.app')
+
+@section('content')
+    @if (Route::has('login'))
+        @auth
+            <sys-header :xcolor="'green'"> <sys-cobranding /> </sys-header> 
+        @else
+            <sys-header :xcolor="'red'"> <sys-cobranding /> </sys-header> 
+        @endauth
+    @endif
+   
+    
+    <sys-footer></sys-footer>
+    
+@endsection
