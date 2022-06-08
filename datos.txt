@@ -134,3 +134,5 @@ export {i18n}
 > php artisan make:middleware AdminMiddleware
 
 > php artisan jwt:secret
+
+> php artisan make:migration create_trigger

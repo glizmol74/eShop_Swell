@@ -46,7 +46,8 @@ export default {
       t_user: '',
       pp: 'a',
       st: 0,
-    }),
+      nivel: 0,
+    }), 
 
     beforeCreate() {
             this.$i18n.locale = this.$session.get('idioma')
@@ -60,13 +61,14 @@ export default {
         if ( !this.pp ) this.pp = 0
         let category = window.location.pathname
         category= category.split('/')
-        axios.get(`/productos?category=${category[2]}&tipo=${this.pp}`)
+        this.nivel = category.length
+        axios.get(`/productos?category=${category[this.nivel-1]}&tipo=${this.pp}`)
         //axios.get(`/productos`)
             .then( (res) => {
                 this.filtro_items = res.data.articulos
             })
 
-        axios.get(`/categorias/${category[2]}`)
+        axios.get(`/categorias/${category[this.nivel-1]}`)
             .then ( (res) => {
                 this.items = res.data.categories
                 
@@ -88,6 +90,7 @@ export default {
                         let elen = [];
                         ele['text'] = element.es_name.charAt(0).toUpperCase() + element.es_name.slice(1);
                         ele['href'] = `/category/${element.es_name}`;
+                        
                         this.bread.push(ele);
                         elen['text'] = element.en_name.charAt(0).toUpperCase() + element.en_name.slice(1);
                         elen['href'] = `/category/${element.en_name}`;
@@ -97,10 +100,13 @@ export default {
                     let eln = [];
                     el['text'] = res.data.categories.es_name.charAt(0).toUpperCase()+ res.data.categories.es_name.slice(1)
                     el['href'] = `/category/${res.data.categories.es_name}`
+                    el['disabled'] = true;
                     this.bread.push(el)
                     eln['text'] = res.data.categories.en_name.charAt(0).toUpperCase()+ res.data.categories.en_name.slice(1)
                     eln['href'] = `/category/${res.data.categories.en_name}`
+                    eln['disabled'] = true;
                     this.bread_en.push(eln)
+
                 }
                 
 

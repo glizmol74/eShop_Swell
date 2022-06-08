@@ -22,6 +22,7 @@ class CategoriasController extends Controller
                                             'c.cat_es_name as padre_es_name', 'c.cat_en_name as padre_en_name')
                                     ->orderBy('categorias.cat_padre', 'ASC')
                                     ->orderBy('categorias.cat_posicion', 'ASC')
+                                    ->orderBy('categorias.cat_es_name', 'ASC')
                                     ->get();
             return $categoria;
         } else {
@@ -47,6 +48,7 @@ class CategoriasController extends Controller
                                         'c.cat_es_name as padre_es_name', 'c.cat_en_name as padre_en_name')
                                 ->orderBy('categorias.cat_padre', 'ASC')
                                 ->orderBy('categorias.cat_posicion', 'ASC')
+                                ->orderBy('categorias.cat_es_name', 'ASC')
                                 ->get();
         return $categoria;
     }

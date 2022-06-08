@@ -210,7 +210,7 @@ class HomeController extends Controller
         if ( is_numeric($id) ) {
             $categoria = Categorias::where('id','=',$id)->select('id','cat_es_name as es_name','cat_en_name as en_name', 'cat_padre as padre')->first();
         }else {
-            //$id = strtolower($id);
+            //$id = strtolower($id);  
             $categoria = Categorias::where('cat_es_name','=',$id)
                                     ->orwhere('cat_en_name','=',$id)
                                     ->select('id','cat_es_name as es_name','cat_en_name as en_name', 'cat_padre as padre')->first();
@@ -230,7 +230,7 @@ class HomeController extends Controller
         $children = $this->search_child($children);
         $parents = $this->search_parent($categoria->padre, $parents);
         if ( count($children) != 0)
-            $categoria->t_hijo = 1;
+            $categoria->t_hijo = 1; 
         else
             $categoria->t_hijo = 0;
         $data['categories'] = $categoria; 
@@ -256,14 +256,14 @@ class HomeController extends Controller
         return $children;
     }
 
-    public function search_parent($id, $parents)
+    public static function search_parent($id, $parents) 
     {
         $parent = Categorias::where('id','=', $id)
                                 ->select('id', 'cat_es_name as es_name', 'cat_en_name as en_name', 'cat_padre as padre')
                                 ->first();
         $parents[] = $parent;
         if ((isset($parent->padre)) && ($parent->padre))
-            $parents = $this->search_parent($parent->padre, $parents);
+            $parents = HomeController::search_parent($parent->padre, $parents);
 
         return $parents;
     }

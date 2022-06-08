@@ -39,6 +39,9 @@ Vue.component('menu-top-asside', require('./components/MenuTopAssideComponent.vu
 
 // Pagina Web
 Vue.component('sys-header', require('./components/Sys/SysHeaderComponent.vue').default);
+Vue.component('Menu', require('./components/Sys/Menu.vue').default);
+Vue.component('MenuItem', require('./components/Sys/MenuItem.vue').default);
+Vue.component('MenuItems', require('./components/Sys/SysMenuItem.vue').default);
 Vue.component('sys-footer', require('./components/Sys/SysFooterComponent.vue').default);
 Vue.component('sys-index', require('./components/Sys/SysIndexComponent.vue').default);
 Vue.component('sys-carrousel-banner', require('./components/Sys/SysCarrouselBannerComponent.vue').default);

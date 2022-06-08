@@ -7,7 +7,7 @@
                     elevation="0"
                     :href="`/products/${item.id}?tipo=${tuser}`"
                     style="text-decoration:none">
-                <v-img :src="item.image" contain transition="scale-transition" :alt="item.es_name" @click="verMas(item)">
+                <v-img :src="item.image" contain transition="scale-transition" :alt="item.es_name" @click="verMas(item)" max-height="300px">
                     <div v-if="hover" style="height: 100%;"></div>
                 </v-img>
 

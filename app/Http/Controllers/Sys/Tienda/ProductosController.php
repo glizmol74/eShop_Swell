@@ -8,10 +8,11 @@ use Illuminate\Http\Request;
 use App\Models\Sys\Tienda\Categorias;
 use App\Models\Sys\Tienda\Productos_categorias;
 use App\Models\Sys\Tienda\Productos_atributos;
+use App\Http\Controllers\HomeController;
 
 class ProductosController extends Controller
 {
-    public function index(Productos $productos, Request $request)
+    public function index(Productos $productos, Request $request) 
     {
         if ( $request->ajax() ) {
             $productos = array();
@@ -212,8 +213,8 @@ class ProductosController extends Controller
 
                 $categoria = Productos_categorias::join('categorias as c', 'c.id', '=', 'pca_categoria')
                                 ->where('pca_producto', '=', $id)
-                                ->select('c.cat_es_name as es_name', 'cat_en_name as en_name')
-                                ->orderby('c.id', 'ASC')->first();
+                                ->select('c.cat_es_name as es_name', 'cat_en_name as en_name', 'c.id')
+                                ->orderby('c.id', 'DESC')->first();
 
                 foreach ( $imagenes as $key => $value) {
                     if ( $value['image'] != null)
@@ -233,11 +234,16 @@ class ProductosController extends Controller
                             ->orderby('cat_posicion', 'ASC')
                             ->get();
 
+            $parents = array();
+            $hijo = $categoria->id;
+            $parents = HomeController::search_parent($hijo, $parents);
+
             $data['atributos'] = $atributos;
             $data['es_categoria'] = $categoria->es_name;
             $data['en_categoria'] = $categoria->en_name;
             $data['data'] = $productos;
-            $data['cat']= $menu;
+            $data['cat']= $categoria;
+            $data['padres'] = array_reverse($parents);
         }
 
         return $data;

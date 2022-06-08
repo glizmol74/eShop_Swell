@@ -129,8 +129,8 @@ export default {
           telefono: '',
           comentarios: '',
       },
-      destinatario_es: ['Atención al Cliente', 'Canal Mayorista'],
-      destinatario_en: ['Customer Support', 'Reseller Support'],
+      destinatario_es: ['Atención al Cliente', 'Atención a Proveedores', 'Administración', 'Soporte'],
+      destinatario_en: ['Customer Support', 'Attention to Providesers', 'Administration', 'Support'],
 
       xcolor: 'green',
       snackbar: false,

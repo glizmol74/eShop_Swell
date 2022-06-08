@@ -19,6 +19,7 @@ class CreateClientesTable extends Migration
             $table->string('cli_razon');
             $table->bigInteger('cli_cuit')->unique();
             $table->string('cli_direccion');
+            $table->string('cli_entre_calles')->nullable();
             $table->integer('cli_telefono')->nullable();
             $table->integer('cli_whatsapp')->nullable();
             $table->decimal('cli_saldo');

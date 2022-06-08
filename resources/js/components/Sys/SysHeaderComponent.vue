@@ -19,9 +19,11 @@
                     <li class="nav-item subtitle-1" id="nosotros">
                         <a class="nav-link text-uppercase" href="/nosotros"> {{$t('m.about')}}</a>
                     </li>
+                    
                     <div v-for="(mcat,index) in hmenus" :key="index" >
                         <div v-if="hmenus[index].categories.children  != ''"> 
-                            <div>
+                            
+                            <div> 
                                 <li class="nav-item dropdown subtitle-1">
                                     <v-menu offset-y :close-on-content-click="false" elevation="0">
                                         <template v-slot:activator="{ on, attrs }">
@@ -32,55 +34,63 @@
                                                     {{mcat.categories.en_name}}
                                             </a>
                                         </template>
-                                        <v-card width="300px" color=#f8f9fa elevation="0" style="border: 1px solid #cdcdcd;">
+                                        <v-card width="450px" color=#f8f9fa elevation="0" style="border: 1px solid #cdcdcd;">
                                             <div v-for="(cat,id2) in mcat.categories.children" :key="id2">
                                                 <div v-if="cat.children !='' ">
-                                                    <v-expansion-panels accordion flat>
+                                                    <v-expansion-panels accordion flat multiple>
                                                         <v-expansion-panel style="backgroung:#f8f9fa">
-                                                            <v-expansion-panel-header v-if="$i18n.locale === 'es'" class="subtitle-2">{{cat.es_name}}</v-expansion-panel-header>
-                                                            <v-expansion-panel-header v-else class="subtitle-2">{{cat.en_name}}</v-expansion-panel-header>
+                                                            <v-expansion-panel-header v-if="$i18n.locale === 'es'" class="subtitle-1"><strong> {{cat.es_name}}</strong> </v-expansion-panel-header>
+                                                            <v-expansion-panel-header v-else class="subtitle-1"><strong> {{cat.en_name}}</strong> </v-expansion-panel-header>
                                                             <v-expansion-panel-content>
-                                                                <div v-for="(ca, id3) in cat.children" :key="id3">
-                                                                    <div v-if="ca.children !='' ">
-                                                                        <div class="mt-3 subtitle-2">
-                                                                            <div v-if="$i18n.locale === 'es'" class="drop-ecom-2" style="width:100%"><strong> {{ca.es_name}}</strong></div>
-                                                                            <div v-else class="drop-ecom-2" style="width:100%"><strong> {{ca.en_name}}</strong></div>
-                                                                            <div v-for="(c,id4) in ca.children" :key="id4">
-                                                                                <div class="drop-ecom subtitle-2">
-                                                                                    <a v-if="$i18n.locale === 'es'" class="nav-link" :href="`/category/${c.es_name}`">{{c.es_name}}</a>
-                                                                                    <a v-else class="nav-link" :href="`/category/${c.es_name}`">{{c.en_name}}</a>
-                                                                                </div> 
-                                                                            </div> 
-                                                                        </div>
+                                                                 
+                                                                <div v-for="(ca, id3) in cat.children" :key="id3" :ca="ca">
+                                                                     <div v-if="ca.children !='' ">
+                                                                        <MenuItems :ca="ca"/>
+                                                                             <!-- <v-expansion-panel>
+                                                                                <v-expansion-panel-header v-if="$i18n.locale === 'es'" class="subtitle-1" style="width:100%"><strong> {{ca.es_name}}</strong></v-expansion-panel-header>
+                                                                                <v-expansion-panel-header v-else class="subtitle-1" style="width:100%"><strong> {{ca.en_name}}</strong></v-expansion-panel-header>
+                                                                                <v-expansion-panel-content>
+                                                                                    <div class="mt-3 subtitle-1">
+                                                                                        <div v-for="(c,id4) in ca.children" :key="id4">
+                                                                                            <div class="drop-ecom subtitle-1">
+                                                                                                <a v-if="$i18n.locale === 'es'" class="nav-link" :href="`/category/${c.es_name}`">{{c.es_name}}</a>
+                                                                                                <a v-else class="nav-link" :href="`/category/${c.es_name}`">{{c.en_name}}</a>
+                                                                                            </div> 
+                                                                                        </div> 
+                                                                                    </div>
+                                                                                </v-expansion-panel-content>
+                                                                            </v-expansion-panel> -->
+
+                                                                        
                                                                     </div>
                                                                     <div v-else>
-                                                                        <div class="navbar-nav drop-ecom-2 subtitle-2 mt-3">
-                                                                                <a v-if="$i18n.locale === 'es'" class="nav-link" :href="`/category/${ca.es_name}`">{{ca.es_name}}</a>
-                                                                                <a v-else class="nav-link" :href="`/category/${ca.es_name}`">{{ca.en_name}}</a>
-                                                                            </div>
-                                                                    </div>
-                                                                </div> 
+                                                                        <div class="navbar-nav drop-ecom subtitle-1 mt-3">
+                                                                            <a v-if="$i18n.locale === 'es'" class="nav-link" :href="`/category/${ca.es_name}`">{{ca.es_name}}</a>
+                                                                            <a v-else class="nav-link" :href="`/category/${ca.es_name}`">{{ca.en_name}}</a>
+                                                                        </div>
+                                                                    </div> 
+                                                                </div>
                                                             </v-expansion-panel-content>
                                                         </v-expansion-panel>
                                                     </v-expansion-panels>
                                                 </div>
-                                                <div v-else>
-                                                        <a v-if="$i18n.locale === 'es'" class="nav-link" :href="`/category/${cat.es_name}`">{{cat.es_name}}</a>
-                                                        <a v-else class="nav-link" :href="`/category/${cat.es_name}`">{{cat.en_name}}</a>
+                                                <div v-else class="navbar-nav drop-ecom-2 subtitle-1 mt-3">
+                                                        <a v-if="$i18n.locale === 'es'" class="nav-link drop-ecom-2 subtitle-1 mt-3" :href="`/category/${cat.es_name}`">{{cat.es_name}}</a>
+                                                        <a v-else class="nav-link drop-ecom-2 subtitle-1 mt-3" :href="`/category/${cat.es_name}`">{{cat.en_name}}</a>
                                                 </div>
-                                            </div>
+                                            </div> 
                                         </v-card>
                                     </v-menu> 
                                 </li>  
-                            </div>
-                        </div>
+                            </div> 
+                        </div> 
                         <div v-else>
                             <li class="nav-item subtitle-1" :id="`${index}`"> 
                                 <a v-if="$i18n.locale === 'es'" class="nav-link text-uppercase" :href="`/category/${index}`">{{mcat.categories.es_name}}</a>
                                 <a v-else class="nav-link text-uppercase" :href="`/category/${index}`">{{mcat.categories.en_name}}</a>
                             </li> 
                         </div>
-                    </div>
+                    </div> 
                   <!--  <li class="nav-item subtitle-1" id="mayoristas">
                         <a class="nav-link text-uppercase" href="/mayoristas">{{$t('m.reseller')}}</a>
                     </li> -->
@@ -140,12 +150,13 @@
 
 <script>
 
+import SysMenuItem from './SysMenuItem.vue';
+
 
 export default {
     props: {
-      source: String,
-      xcolor: String,
-      
+        source: String,
+        xcolor: String,
     },
     data() {
         return {
@@ -158,74 +169,65 @@ export default {
             fav: true,
             message: false,
             hints: true,
-            idioma: '',
-
-            ltemp: '',
-        }
+            idioma: "",
+            ltemp: "",
+        };
     },
-
-    
     created() {
-        
-        this.$idioma = this.$session.get('idioma'),
-        this.$i18n.locale = this.$session.get('idioma'),
-        axios.get('/mcategorias/all')
-            .then((res) => {
-                this.hmenus = res.data
-            })
-       
+        this.$idioma = this.$session.get("idioma"),
+            this.$i18n.locale = this.$session.get("idioma"),
+            axios.get("/mcategorias/all")
+                .then((res) => {
+                this.hmenus = res.data;
+            });
     },
     mounted() {
         // this.ltemp = this.$session.getAll() 
-        
-         if ( this.xcolor == 'red') {
-            this.$session.remove('valor-e')
-            this.$session.remove('u-tipo')
-            this.$session.remove('u-st')
-            this.$session.set('u-id',0)
-            localStorage.removeItem('formdata')
+        if (this.xcolor == "red") {
+            this.$session.remove("valor-e");
+            this.$session.remove("u-tipo");
+            this.$session.remove("u-st");
+            this.$session.set("u-id", 0);
+            localStorage.removeItem("formdata");
         }
-       // this.ltemp = this.$session.getAll() 
+        // this.ltemp = this.$session.getAll() 
     },
     beforeCreate() {
-        if ( !this.$session.exists() ) {
-            this.$session.start()
-            this.$session.set('idioma','es')
-            this.$session.set('u-id', 0)
-        }else {
-
-            this.$idioma = this.$session.get('idioma'),
-            this.$i18n.locale = this.$idioma
+        if (!this.$session.exists()) {
+            this.$session.start();
+            this.$session.set("idioma", "es");
+            this.$session.set("u-id", 0);
         }
-
+        else {
+            this.$idioma = this.$session.get("idioma"),
+                this.$i18n.locale = this.$idioma;
+        }
     },
-
     methods: {
         changeDrawer(id) {
             this.drawer = id;
         },
-
         selectLang(lang) {
-            this.$session.set('idioma',lang)
-            localStorage.setItem('ecomerce-locale', lang)
-            this.$i18n.locale =  this.$session.get('idioma')
-           //this.$i18n.locale = lang
-           this.$idioma = this.$session.get('idioma')
+            this.$session.set("idioma", lang);
+            localStorage.setItem("ecomerce-locale", lang);
+            this.$i18n.locale = this.$session.get("idioma");
+            //this.$i18n.locale = lang
+            this.$idioma = this.$session.get("idioma");
         }
     },
-
-    props: ['xcolor'],
+    props: ["xcolor"],
+    components: { SysMenuItem }
 }
 </script>
 
 <style scoped>
     .drop-ecom{
-    padding: 0px 20px;
+    padding: 0px 10px;
     margin: 0px!important;
 
     }
     .drop-ecom-2{
-    padding: 0px 10px;
+    padding: 0px 5px;
     margin: 0px!important;
 
     }
@@ -235,7 +237,7 @@ export default {
 
     }
     .v-expansion-panel-header{
-    padding: 0px 20px;
+    padding: 0px 10px;
     margin: 0px 0px 0px 0px!important;
 
     }

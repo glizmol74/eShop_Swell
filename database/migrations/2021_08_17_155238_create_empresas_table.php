@@ -26,6 +26,8 @@ class CreateEmpresasTable extends Migration
             $table->string('emp_email')->nullable();
             $table->string('emp_admin')->nullable();
             $table->string('emp_ventas')->nullable();
+            $table->string('emp_compras')->nullable();
+            $table->string('emp_soporte')->nullable();
             $table->longText('emp_mapa')->nullable()->create();    
             $table->bigInteger('emp_add')->nullable()->unsigned();    
             $table->foreign('emp_add')->references('id')->on('users');

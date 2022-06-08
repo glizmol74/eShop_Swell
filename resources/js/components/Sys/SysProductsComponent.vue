@@ -15,15 +15,15 @@
             <v-col cols="12" md="4" sm="12" style="">
                 <span class="text-left text-uppercase font-weight-black subtitle-1" style=""></span>
 
-                <div style="width:100%">
+                <div style="width:250px; max-height: 350px;" >
                     <zoom-on-hover :img-normal="imagen_actual" class="mr-2" :scale="1"></zoom-on-hover>
                 </div>
 
-                <v-sheet class="" elevation="0" max-width="800">
+                <v-sheet class="" elevation="0" max-width="400">
                     <v-slide-group class="" prev-icon="mdi-minus" next-icon="mdi-plus" show-arrows>
                         <v-slide-item v-for="image in atributos" :key="image.id">
-                            <v-img :src="image.image" contain height="100" width="100"
-                                    :alt="image.alt" @click="changeImg(image)" style="cursor:pointer;"
+                            <v-img :src="image.image" contain height="100px" width="100px"
+                                    :alt="image.alt" @click="changeImg(image)" style="cursor:pointer; max-height: 150px;"
                              ></v-img>
                         </v-slide-item>
                     </v-slide-group>
@@ -81,8 +81,7 @@
                         
                         <v-col xs="12" sm="12" md="12">
                             <h5>{{$t('m.presentations') }}</h5>
-                            <h5> {{windowWidth}} </h5>
-                            {{ this.paseatributo }}
+                            
                             <div v-if="this.$i18n.locale === 'es'">
                                 <div v-if="!(pp > 0 && st == 1)">
                                     <template v-for="attr in atributos">
@@ -187,7 +186,7 @@
                     <v-row v-if="windowWidth < 960">
                         <v-col cols="12" md="1" class="justify-space-around d-none d-md-flex">
                             <div>
-                                <v-img :src="this.datos.image" aspect-ratio="1" contain width="80px"></v-img>
+                                <v-img :src="this.datos.image" aspect-ratio="1" contain width="80px" max-height="150px"></v-img>
                             </div>
                         </v-col>
 
@@ -216,7 +215,7 @@
                            
                                 <v-col cols="12" md="1" class="justify-space-around d-none d-md-flex">
                                     <div>
-                                        <v-img :src="at.image" aspect-ratio="1" contain width="80px"></v-img>
+                                        <v-img :src="at.image" aspect-ratio="1" contain width="80px" max-height="150px"></v-img>
                                     </div>
                                      
                                 </v-col>

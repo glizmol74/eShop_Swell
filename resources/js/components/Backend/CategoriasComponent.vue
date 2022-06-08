@@ -80,6 +80,7 @@
                         <v-col cols="6" md="4">
                             <v-text-field v-model="categoria.orden"
                                         label="Orden"
+                                        :error-messages="ordenErrors"
                                         @input="categoria.orden.touch()"
                                         @blur="categoria.oden.touch()"
                                         type="number"
