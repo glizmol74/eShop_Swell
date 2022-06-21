@@ -64,9 +64,9 @@
             <v-col xs="12" sm="12" md="3" cols="12" class="d-flex align-center justify-center">
                 <v-row>
                     <v-col cols="5" style="min-height:180px" class="caption mt-10 d-flex flex-column align-end justify-space-between align-items mt-auto">
-                        <a class="uppercase--text black--text caption" style="text-decoration:none" href="/category/hogar">{{$t('m.home') |uppercase}}</a>
-                        <a class="uppercase--text black--text" style="text-decoration:none" href="/category/higiene">{{$t('m.hygiene') |uppercase}}</a>
-                        <a class="uppercase--text black--text" style="text-decoration:none" href="/category/ropa">{{$t('m.clothes') |uppercase}}</a>
+                        <a class="uppercase--text black--text caption" style="text-decoration:none" href="/category/Productos%20Liquidos">{{$t('m.home') |uppercase}}</a>
+                        <a class="uppercase--text black--text" style="text-decoration:none" href="/category/Higiene%20Personal">{{$t('m.hygiene') |uppercase}}</a>
+                        <a class="uppercase--text black--text" style="text-decoration:none" href="/category/Productos%20Para%20Ropa">{{$t('m.clothes') |uppercase}}</a>
                         <a class="uppercase--text black--text text-right" style="text-decoration:none" href="/category/mayoristas">{{$t('m.reseller') |uppercase}}</a>
                     </v-col>
                     <v-col cols="1">
@@ -121,6 +121,10 @@ export default {
             .then ( res=> {
                 this.contact = res.data;
                 this.$session.set('correo_c',this.contact.mail);
+                this.$session.set('correo_admin',this.contact.mail_admin);
+                this.$session.set('correo_ventas',this.contact.mail_ventas);
+                this.$session.set('correo_compras',this.contact.mail_compras);
+                this.$session.set('correo_soporte',this.contact.mail_soporte);
             })
     },
 

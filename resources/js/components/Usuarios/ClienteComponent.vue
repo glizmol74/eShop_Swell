@@ -88,7 +88,7 @@
                         ></v-text-field>
                     </v-col>
 
-                    <v-col cols="6" md="8">
+                    <v-col cols="6" md="6">
                         <v-text-field v-model.trim="$v.usuario.direccion.$model"
                                     :label="this.$t('m.street')"
                                     :error-messages="addressErrors"
@@ -98,6 +98,13 @@
                                     :counter="100"
                         ></v-text-field>
                     </v-col>
+
+                    <v-col cols="6" md="6">
+                        <v-text-field v-model.trim="entre_calles"
+                                    :label="this.$t('m.between_streets')"
+                                    type="text"
+                        ></v-text-field>
+                    </v-col>                    
 
                     <v-col cols="12" md="4">
                         <v-autocomplete v-model="$v.usuario.provincia.$model"
@@ -112,7 +119,7 @@
                         ></v-autocomplete>
                     </v-col>
 
-                    <v-col cols="12" md="6">
+                    <v-col cols="12" md="4">
                         <v-autocomplete v-model="$v.usuario.localidad.$model"
                                     :error-messages="localidadErrors"
                                     @input="$v.usuario.localidad.$touch()"
@@ -125,7 +132,7 @@
                         ></v-autocomplete>
                     </v-col>
 
-                    <v-col cols="6" md="6">
+                    <v-col cols="6" md="4">
                         <v-text-field v-model.trim="$v.usuario.cp.$model"
                                     :label="this.$t('m.zip')"
                                     :error-messages="cpErrors"
@@ -150,6 +157,12 @@
                                     filled
                                     disabled
                         ></v-text-field>
+                    </v-col>
+                    <v-col cols="8" md="8" v-if="this.aceptarCambioCorreo" >
+                        <v-checkbox
+                            v-model="checkboxCorreo"
+                            label="Al cambiar el Email su cuenta se Bloqueara hasta verificar el nuevo correo electronico acepte los terminos para continuar"
+                        ></v-checkbox>
                     </v-col>
                 </v-row>
 
@@ -181,7 +194,7 @@ export default {
             usuario: {razonsocial: '', dni: '', telefono: '', whatsapp: '', correo: '',
                     direccion: '', provincia: '', localidad: '', pais: '', cod_tempo: '',
                     cli_id: '', saldo: '', perfil: '', per_descripcion: '', estado: '',
-                    usr_id: '', edit_loc: '', cp:''},
+                    usr_id: '', edit_loc: '', cp:'', entre_calles: ''},
             prov_disable: true,
             local_disable: true,
             breadmenu_es: [{text: 'Swell', disabled: false, href: '/',},
@@ -189,6 +202,10 @@ export default {
             breadmenu_en: [{text: 'Swell', disabled: false, href: '/',},
                            {text: 'customers', disabled: true, href: 'clientes'}],
             pp: 'a',
+            entre_calles: '',
+            old_correo: '',
+            aceptarCambioCorreo: 0,
+            checkboxCorreo: false,
         }
     },
 
@@ -213,6 +230,18 @@ export default {
         'usuario.localidad': function( newVal, oldVal) {
             this.cambioLocalidad()
         },
+
+        'entre_calles' : function(newVal, oldVal) {
+            this.usuario.entre_calles = this.entre_calles
+        },
+
+        'usuario.correo': function( newVal, oldVal) {
+            if ( this.usuario.correo != this.old_correo) {
+                this.aceptarCambioCorreo = 1
+            } else {
+                this.aceptarCambioCorreo = 0
+            }
+        }
     },
 
     computed: {
@@ -344,6 +373,7 @@ export default {
             this.usuario.whatsapp = item.whatsapp
             this.usuario.correo = item.correo
             this.usuario.direccion = item.direccion
+            this.entre_calles = item.entre_calles
             this.usuario.provincia = item.provincia
             this.usuario.localidad = item.localidad
             this.usuario.edit_loc = item.localidad
@@ -356,18 +386,32 @@ export default {
             this.usuario.estado = item.estado
             this.usuario.usr_id = item.usr_id
             this.modoEditar = true
+            this.old_correo = item.correo
             
         },
 
         editarUsuario( usuario) {
             this.$v.usuario.$touch()
             if ( this.$v.usuario.$pending || this.$v.usuario.error ) return
+
+            if (this.usuario.correo != this.old_correo && this.checkboxCorreo == false) {
+                this.aceptarCambioCorreo = 1
+                this.text = "Debe aceptar La politica de Cambio de Email"
+                this.color = "bg-danger"
+                this.snackbar = true
+                return
+            }
+
+            if (this.usuario.correo != this.old_correo && this.checkboxCorreo == false) {
+                this.usuario.estado = 0
+            }
             const params = { dni: this.usuario.dni,
                              razonsocial: this.usuario.razonsocial,
                              telefono: this.usuario.telefono,
                              whatsapp: this.usuario.whatsapp,
                              correo: this.usuario.correo,
                              direccion: this.usuario.direccion,
+                             entre_calles: this.usuario.entre_calles,
                              provincia: this.usuario.provincia,
                              cod_postal: this.usuario.localidad,
                              pais: this.usuario.pais,
@@ -393,6 +437,10 @@ export default {
                     }
                     this.$v.$reset()
                     this.snackbar = true
+                    if ( res.data[3] == 0) {
+                        setTimeout(() => { }, 5500);
+                        window.location.href = "/perfil";
+                    }
                 })
                 .catch( error => {
                     this.text = 'Error editando'
@@ -428,7 +476,7 @@ export default {
             localidad: { numeric },
             per_descripcion: {required},
             cp: { numeric },
-            saldo: { numeric},
+            saldo: { },
         }
     }
 }

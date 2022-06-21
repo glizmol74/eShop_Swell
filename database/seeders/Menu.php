@@ -23,6 +23,8 @@ class Menu extends Seeder
                 'password' => Hash::make('Jose1974'),
                 'api_token' => uniqid(),
                 'email_verified_at' => now(),
+                'correoVerificador' => 'A013b5',
+                'correoOk' => true
             ]);
             
             DB::table('users')->insert([
@@ -30,7 +32,8 @@ class Menu extends Seeder
                 'email' => 'nmalbran@swell.com.ar',
                 'password' => Hash::make('12345678'),
                 'api_token' => Str::random(50),
-                'email_verified_at' => now(),
+                'correoVerificador' => 'b11C05',
+                'correoOk' => false
             ]);
 
             DB::table('users')->insert([
@@ -39,6 +42,8 @@ class Menu extends Seeder
                 'password' => Hash::make('12345678'),
                 'api_token' => Str::random(50),
                 'email_verified_at' => now(),
+                'correoVerificador' => 'Xa3Z65',
+                'correoOk' => true
             ]);
         }
         

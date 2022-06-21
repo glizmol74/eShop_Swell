@@ -29,6 +29,10 @@ export const m =
     "high": "High",
     "anular_p": "Cancel Order",
     "go_back": "Go back",
+    "code" : "Verification Code",
+    "validate_mail" : "Validate Email",
+    "validate_mail_ok" : "Email Validated Correctly",
+    "validate_mail_error" : "Invalid Confirmation Code",
 
     "suscription_success": "Successfully registered. You will soon receive all our news",
     "suscription_error": "There was an error registering the mail. Please try again later",
@@ -93,6 +97,7 @@ export const m =
     "state":"State",
     "city":"City",
     "street":"Address",
+    "between_streets" : "Between Streets",
     "zip":"Zip code",
     "number":"Number",
     "floor":"Floor",

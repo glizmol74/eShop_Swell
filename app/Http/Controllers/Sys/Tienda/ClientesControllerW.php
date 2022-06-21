@@ -13,8 +13,11 @@ use App\Models\Sys\Tienda\Provincia;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EmailNuevoCliente;
+use App\Mail\EmailSendClienteNew;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
-class ClientesController extends Controller
+class ClientesControllerW extends Controller
 {
     public function __construct()
     {
@@ -61,6 +64,28 @@ class ClientesController extends Controller
         //
     }
 
+    
+    public static function  enviar_email_verificador($id){
+        $permitido = '01234567889ABCDEFGHIJKLMNOPQRSTXYZabcdefghijklmnopqrstvwxyz';
+        $codigo = substr(str_shuffle($permitido),0,6);
+        $user = User::where('id', '=', $id)->first();
+        $data = array();
+        $data[0] = 0;
+        $data[1] = 'Error enviando email';
+        if ( isset($user->id) ) {
+            $form = Clientes::where('cli_user', '=', $id)->first();
+            $user->correoVerificador = $codigo;
+            $user->save();
+            $correo = array();
+            $form->codigo = $codigo;
+            $correo['cliente'] = $form;
+            Mail::to($user->email)->send( new EmailSendClienteNew($correo));
+            $data[0] = 1;
+            $data[1] = 'Envio de correo Satisfactorio';
+        }
+        return $data;
+    }
+
     public function new_cliente(Request $request)
     {
        /* $valiData = $request->validate([
@@ -73,6 +98,8 @@ class ClientesController extends Controller
             'cli_password' => 'required|string|min:8',
         ]);   */
 
+        $permitido = '01234567889ABCDEFGHIJKLMNOPQRSTXYZabcdefghijklmnopqrstvwxyz';
+        $codigo = substr(str_shuffle($permitido),0,6);
         $data = array();
         if ($request->cli_razon!=null) 
             $form = Clientes::where('cli_cuit', '=', $request->cli_cuit)->first();
@@ -95,6 +122,9 @@ class ClientesController extends Controller
         $user->name = $request->cli_razon;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
+        $user->correOk = 0;
+        $user->correoVerificador = $codigo;
+        $user->api_token = Str::random(50);
         $user->save();
 
 
@@ -103,6 +133,7 @@ class ClientesController extends Controller
         $form->cli_razon = $request->cli_razon;
         $form->cli_cuit = $request->cli_cuit;
         $form->cli_direccion = $request->cli_direccion;
+        $form->cli_entre_calles = $request->entre_calles;
         $form->cli_telefono = $request->cli_telefono;
         $form->cli_whatsapp = $request->cli_whatsapp;
         $form->cli_saldo = 0;
@@ -116,10 +147,11 @@ class ClientesController extends Controller
             $form->cli_estado = 0;
         $form->cli_user = $user->id;
         $form->save();
+        $form->codigo = $codigo;
         $data[0] = 1;
         $data[1]="Registro Satifactorio";
 
-        event(new Registered($user));
+        //event(new Registered($user));
 
         $emp = Empresas::select('emp_ventas as destinatario')->first();
         $pro = Provincia::leftjoin('localidads as l', 'loc_provincia', '=', 'provincias.id')
@@ -130,8 +162,9 @@ class ClientesController extends Controller
         $correo = array();
         $correo['cliente'] = $form;
         $correo['correo'] = $request->email;
-        $correo['postal'] = $pro;
-
+        $correo['postal'] = $pro; 
+        
+        $this->enviar_email_verificador($user->id);
         Mail::to($emp->destinatario)->send( new EmailNuevoCliente($correo));
 
         return $data;

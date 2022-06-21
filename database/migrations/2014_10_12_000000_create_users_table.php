@@ -21,6 +21,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->string('api_token')->unique();
+            $table->string('correoVerificador');
+            $table->boolean('correoOk');
             $table->timestamps();
         });
     }

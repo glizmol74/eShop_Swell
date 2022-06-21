@@ -12,7 +12,7 @@
     <br />
     <p class="sys-pre_footer"> No dejes de seguirnos en las redes sociales..</p>
     <p class="sys-pre_footer">
-        <img src="{{url('http://192.168.0.111/storage/images/fb.svg')}}" class="fb" alt="Laravel Logo" width="30px">&nbsp;&nbsp;
-        <img src="{{url('/storage/images/fb.svg')}}" class="fb" alt="Laravel Logo" width="30px">
+        <img src="{{url('/storage/images/fb.svg')}}" class="fb" alt="{{url('/storage/images/fb.svg')}}" width="30px">&nbsp;&nbsp;
+        <img src="{{url('/storage/images/ig.svg')}}" class="ig" alt="{{url('/storage/images/fb.svg')}}" width="30px">
     </p>
 </div>

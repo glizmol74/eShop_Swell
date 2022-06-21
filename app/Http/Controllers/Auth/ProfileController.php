@@ -31,6 +31,25 @@ class ProfileController extends Controller
                                  'per_descripcion as perfil', 'email_verified_at as email_ok', 'cli_whatsapp as celular',
                                  'cli_cuit', 'cli_direccion')
                         ->where('users.id', '=', auth()->id())->first();                        
+    } 
+
+    public function validar_correo(Request $request)
+    {
+        $data = array();
+        $data[0] = 0;
+        $data[1] = 'Codigo Invalido';
+        $form = User::where('id','=',  auth()->id())->first();
+        if (isset($form->id)) {
+            if ($form->correoVerificador == $request->codigo) {
+                $form->email_verified_at = now();
+                $form->correoOk = 1;
+                $form->update();
+                $data[0] = 1;
+                $data[1] = 'Correo Validado';
+                $data[2] = $form->email_verified_at;
+            }
+        }
+        return $data;
     }
 
     public function menus(Request $request)
@@ -69,7 +88,8 @@ class ProfileController extends Controller
     {
         $user = User::where('id', '=', auth()->id() )->first();
         if ( isset( $user->id) ) {
-            $user->email_verified_at = now();
+            $user->email_ok = 0;
+            
             $user->save();
         }
     }

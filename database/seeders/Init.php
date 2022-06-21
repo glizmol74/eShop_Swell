@@ -34,7 +34,7 @@ class Init extends Seeder
                 'cli_whatsapp' => '1149698450',
                 'cli_saldo' => 0,
                 'cli_tipo' => 3,
-                'cli_estado' => 1,
+                'cli_estado' => 0,
                 'cli_user' => 2, 
             ]);
 
@@ -71,29 +71,28 @@ class Init extends Seeder
         DB::table('categorias')->truncate();
         if ( 1 == 1) {
             DB::table('categorias')->insert([
-                'cat_es_name' => 'Catalogos',
-                'cat_en_name' => 'Catalogs',
-                'cat_posicion' => 1
+                'cat_es_name' => 'Articulos',
+                'cat_en_name' => 'Articles',
+                'cat_posicion' => 2
             ]); //1
 
             DB::table('categorias')->insert([
-                'cat_es_name' => 'Productos Swell',
-                'cat_en_name' => 'Swell Products',
+                'cat_es_name' => 'Productos Liquidos',
+                'cat_en_name' => 'Liquid Products',
                 'cat_posicion' => 1,
-                'cat_padre' => 1
             ]); //2
 
             DB::table('categorias')->insert([
                 'cat_es_name' => 'Productos de Terceros',
                 'cat_en_name' => 'Third Party Products',
-                'cat_posicion' => 3,
+                'cat_posicion' => 2,
                 'cat_padre' => 1
             ]); //3
 
             DB::table('categorias')->insert([
                 'cat_es_name' => 'Limpiadores',
                 'cat_en_name' => 'Cleaners',
-                'cat_posicion' => 3,
+                'cat_posicion' => 1,
                 'cat_padre' => 2
             ]); //4
 
@@ -107,7 +106,7 @@ class Init extends Seeder
             DB::table('categorias')->insert([
                 'cat_es_name' => 'Desengrasantes',
                 'cat_en_name' => 'Degreasers',
-                'cat_posicion' => 1,
+                'cat_posicion' => 3,
                 'cat_padre' => 2
             ]); //6
 
@@ -121,36 +120,42 @@ class Init extends Seeder
             DB::table('categorias')->insert([
                 'cat_es_name' => 'Higiene Personal',
                 'cat_en_name' => 'Personal hygiene',
+                'cat_posicion' => 5,
                 'cat_padre' => 2,
             ]); //8
 
             DB::table('categorias')->insert([
                 'cat_es_name' => 'Cera',
                 'cat_en_name' => 'Wax',
+                'cat_posicion' => 6,
                 'cat_padre' => 2,
             ]); //9
 
             DB::table('categorias')->insert([
                 'cat_es_name' => 'Productos Para Ropa',
                 'cat_en_name' => 'Clothing Products',
+                'cat_posicion' => 7,
                 'cat_padre' => 2,
             ]); //10
 
             DB::table('categorias')->insert([
                 'cat_es_name' => 'Productos Para Automotor',
                 'cat_en_name' => 'Automotive Products',
+                'cat_posicion' => 8,
                 'cat_padre' => 2,
             ]); //11
 
             DB::table('categorias')->insert([
                 'cat_es_name' => 'Productos Especiales',
                 'cat_en_name' => 'Special products',
+                'cat_posicion' => 12,
                 'cat_padre' => 2,
             ]); //12
 
             DB::table('categorias')->insert([
                 'cat_es_name' => 'Alcoholes',
                 'cat_en_name' => 'Alcohols',
+                'cat_posicion' => 9,
                 'cat_padre' => 2,
             ]); //13
 
@@ -287,20 +292,20 @@ class Init extends Seeder
             ]); //35
 
             DB::table('categorias')->insert([
-                'cat_es_name' => 'Agua Lavandina 25 Gr/Lt',
-                'cat_en_name' => 'Lavandina water 25 Gr/Lt',
+                'cat_es_name' => 'Agua Lavandina 25 Gr-Lt',
+                'cat_en_name' => 'Lavandina water 25 Gr-Lt',
                 'cat_padre' => 7,
             ]); //36
 
             DB::table('categorias')->insert([
-                'cat_es_name' => 'Lavandina Concentrada 50 Gr/Lt',
-                'cat_en_name' => 'Concentrated Lavandina 50 Gr/Lt',
+                'cat_es_name' => 'Lavandina Concentrada 50 Gr-Lt',
+                'cat_en_name' => 'Concentrated Lavandina 50 Gr-Lt',
                 'cat_padre' => 7,
             ]); //37
 
             DB::table('categorias')->insert([
-                'cat_es_name' => 'Cloro 80 Gr/Lt',
-                'cat_en_name' => 'Clorine 80 Gr/Lt',
+                'cat_es_name' => 'Cloro 80 Gr-Lt',
+                'cat_en_name' => 'Clorine 80 Gr-Lt',
                 'cat_padre' => 7,
             ]); //38
 
@@ -318,14 +323,14 @@ class Init extends Seeder
             ]); //40
 
             DB::table('categorias')->insert([
-                'cat_es_name' => 'Berzalquat',
-                'cat_en_name' => 'Berzalquat',
+                'cat_es_name' => 'Benzalquat',
+                'cat_en_name' => 'Benzalquat',
                 'cat_padre' => 7,
             ]); //41
 
             DB::table('categorias')->insert([
-                'cat_es_name' => 'Berzalquat Plus 5ta Generación',
-                'cat_en_name' => 'Berzalquat Plus 5th Generation',
+                'cat_es_name' => 'Benzalquat Plus 5ta Generación',
+                'cat_en_name' => 'Benzalquat Plus 5th Generation',
                 'cat_padre' => 7,
             ]); //42
 

@@ -31,6 +31,10 @@ export const m =
     "high": "Alta",
     "anular_p": "Anular Pedido",
     "go_back": "Regresar",
+    "code" : "Codigo de Verificación",
+    "validate_mail" : "Validar Email",
+    "validate_mail_ok" : "Email Validado Correctamente",
+    "validate_mail_error" : "Codigo de Confirmación Invalido",
 
     "suscription_success": "Registrado con éxito. Pronto recibirá todas nuestras novedades",
     "suscription_error": "Hubo un error registrando el correo. Por favor, vuelva a intentarlo más tarde",
@@ -91,6 +95,7 @@ export const m =
     "cuit":"CUIT o DNI",
     "state":"Provincia",
     "street":"Dirección",
+    "between_streets": "Entre Calles",
     "city":"Localidades",
     "zip":"Codigo Postal",
     "number":"Numero",

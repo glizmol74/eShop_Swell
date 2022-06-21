@@ -189,6 +189,26 @@
                         ></v-text-field>
                     </v-col>
 
+                    <v-col cols="6" md="4">
+                        <v-text-field v-model.trim="$v.usuario.cp.$model"
+                                    :label="this.$t('m.zip')"
+                                    :error-messages="cpErrors"
+                                    @input="$v.usuario.cp.$touch()"
+                                    @blur="$v.usuario.cp.$touch()"
+                                    type="number"
+                                    :counter="4"
+                                    disabled
+                        ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="6" md="8">
+                        <v-text-field v-model.trim="entre_calles"
+                                    :label="this.$t('m.between_streets')"
+                                    type="text"
+                                    :disabled="editando"
+                        ></v-text-field>
+                    </v-col>
+
                     <v-col cols="12" md="4">
                         <v-autocomplete v-model="$v.usuario.provincia.$model"
                                     :error-messages="provinciaErrors"
@@ -216,19 +236,7 @@
                         ></v-autocomplete>
                     </v-col>
 
-                    <v-col cols="6" md="2">
-                        <v-text-field v-model.trim="$v.usuario.cp.$model"
-                                    :label="this.$t('m.zip')"
-                                    :error-messages="cpErrors"
-                                    @input="$v.usuario.cp.$touch()"
-                                    @blur="$v.usuario.cp.$touch()"
-                                    type="number"
-                                    :counter="4"
-                                    disabled
-                        ></v-text-field>
-                    </v-col>
-
-                    <v-col cols="6" md="2">
+                    <v-col cols="6" md="4">
                         <v-text-field v-model.trim="$v.usuario.cod_tempo.$model"
                                     label="Codigo Tempo"
                                     :error-messages="codTempoErrors"
@@ -314,7 +322,7 @@
                          {{this.$t('m.cancel')}} 
                     </v-btn>
                 </v-row>
-                <v-row><v-col cols="12"> {{ pp }} </v-col></v-row>
+                <v-row><v-col cols="12"> {{ this.check }} </v-col></v-row>
             </v-card-text> 
         </v-card>
 
@@ -392,7 +400,7 @@ export default {
             usuario: {razonsocial: '', dni: '', telefono: '', whatsapp: '', correo: '',
                     direccion: '', provincia: '', localidad: '', pais: '', cod_tempo: '',
                     cli_id: '', saldo: 0, perfil: '', per_descripcion: '', estado: '',
-                    usr_id: '', edit_loc: '', cp:''},
+                    usr_id: '', edit_loc: '', cp:'', entre_calles: ''},
             prov_disable: true,
             local_disable: true,
             breadmenu_es: [{text: 'Swell', disabled: false, href: '/',},
@@ -415,6 +423,7 @@ export default {
                 { text: 'Eliminar', value: 'delet', sortabe: false}
             ],
             pp: 'a',
+            entre_calles: '',
         }
     },
 
@@ -441,6 +450,10 @@ export default {
         'usuario.per_descripcion': function( newVal, oldVal) {
             this.usuario.perfil = this.usuario.per_descripcion
             this.pp = this.usuario.perfil
+        },
+
+        'entre_calles': function(newVal, oldVal) {
+            this.usuario.entre_calles = this.entre_calles
         },
     },
 
@@ -605,6 +618,7 @@ export default {
                              whatsapp: this.usuario.whatsapp,
                              correo: this.usuario.correo,
                              direccion: this.usuario.direccion,
+                             entre_calles: this.usuario.entre_calles,
                              provincia: this.usuario.provincia,
                              cod_postal: this.usuario.localidad,
                              pais: this.usuario.pais,
@@ -682,6 +696,7 @@ export default {
             this.usuario.whatsapp = item.whatsapp
             this.usuario.correo = item.correo
             this.usuario.direccion = item.direccion
+            this.entre_calles = item.entre_calles
             this.usuario.provincia = item.provincia
             this.usuario.localidad = item.localidad
             this.usuario.edit_loc = item.localidad
@@ -707,6 +722,7 @@ export default {
                              whatsapp: this.usuario.whatsapp,
                              correo: this.usuario.correo,
                              direccion: this.usuario.direccion,
+                             entre_calles: this.usuario.entre_calles,
                              provincia: this.usuario.provincia,
                              cod_postal: this.usuario.localidad,
                              pais: this.usuario.pais,
@@ -822,6 +838,7 @@ export default {
             this.usuario.per_descripcion = ''
             this.usuario.estado = ''
             this.usuario.usr_id = ''
+            this.entre_calles = ''
             this.modoEditar = false
             this.nc = false
             this.editando = true

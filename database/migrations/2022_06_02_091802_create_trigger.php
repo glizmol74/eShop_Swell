@@ -41,6 +41,15 @@ class CreateTrigger extends Migration
                 END IF;
               END
         ");
+
+        // DB::unprepared("
+        //     CREATE TRIGGER cambioEmail AFTER UPDATE ON `users` FOR EACH ROW
+        //       BEGIN
+        //         IF NEW.correoOk = 0 and OLD.correoOk = 1  THEN
+        //             UPDATE users set email_verified_at = NULL WHERE id = NEW.Id;
+        //         END IF;
+        //       END
+        // ");
     }
 
     /**
@@ -52,5 +61,6 @@ class CreateTrigger extends Migration
     {
         Schema::dropIfExists('actualizarSaldoC');
         Schema::dropIfExists('actualizarSaldoCliente');
+        //Schema::dropIfExists('cambioEmail');
     }
 }

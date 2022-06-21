@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use App\Models\Sys\Tienda\Clientes;
 
 class ResetPasswordController extends Controller
 {
@@ -26,5 +27,21 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    //protected $redirectTo = RouteServiceProvider::HOME;
+    public function redirectTo()
+    {
+        $role = Clientes::find(auth()->id())->cli_tipo;
+
+        switch ( $role ) {
+            case 0:
+                return 'admin';
+                    break;
+            case 1:
+                return '/cliente/'.$role;
+                    break;
+            default:
+                return '/login';
+                    break;
+        }
+    } 
 }

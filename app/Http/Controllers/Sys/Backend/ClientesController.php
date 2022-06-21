@@ -11,7 +11,12 @@ use App\Models\User;
 use App\Models\Sys\Tienda\Clientes;
 use App\Models\Sys\Backend\Perfiles;
 use App\Models\Sys\Tienda\Documentos;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EmailSendClienteNewB;
+use App\Mail\EmailBienvenidoClienteNewB;
 use Illuminate\Support\Str;
+use App\Http\Controllers\Sys\Tienda\ClientesControllerW;
+
 
 class ClientesController extends Controller
 {
@@ -36,6 +41,7 @@ class ClientesController extends Controller
                                     'cli_razon as razonsocial',
                                     'cli_cuit as dni',
                                     'cli_direccion as direccion',
+                                    'cli_entre_calles as entre_calles',
                                     'cli_telefono as telefono',
                                     'cli_whatsapp as whatsapp',
                                     'cli_saldo as saldo',
@@ -58,6 +64,9 @@ class ClientesController extends Controller
     {
         $data = array();
         $id = $request->id;
+        $changeMail = 0;
+        $permitido = '01234567889ABCDEFGHIJKLMNOPQRSTXYZabcdefghijklmnopqrstvwxyz';
+        $codigo = substr(str_shuffle($permitido),0,6);
         // Cliente Nuevo
         if ( $request->sw == 0) {
             $form = Clientes::where('cli_cuit', '=', $request->dni)->first();
@@ -77,8 +86,10 @@ class ClientesController extends Controller
             $usuario = new User();
             $usuario->name = $request->razonsocial;
             $usuario->email = $request->correo;
+            $usuario->correoOK = 0;
+            $usuario->correoVerificador = $codigo; 
             $usuario->password = Hash::make($request->pass);
-            //$usuario->api_token = Str::random(50);
+            $usuario->api_token = Str::random(50);
             $usuario->save();
 
 
@@ -86,6 +97,7 @@ class ClientesController extends Controller
             $form->cli_razon = $request->razonsocial;
             $form->cli_cuit = $request->dni;
             $form->cli_direccion = $request->direccion;
+            $form->cli_entre_calles = $request->entre_calles;
             $form->cli_telefono = $request->telefono;
             $form->cli_whatsapp = $request->whatsapp;
             $form->cli_cod_postal = $request->cod_postal;
@@ -98,15 +110,27 @@ class ClientesController extends Controller
             $form->cli_user = $usuario->id;
             //$form->cli_add = auth()->id();
             $form->save();
+            $form->codigo = $codigo;
 
             $data[0] = 1;
             $data[1]="Registro Satifactorio";
             $data[2] = $this->data();
-            event(new Registered($usuario));
+            //event(new Registered($usuario));
 
+            $stc = ['Inactivo','Activo'];
+            $correo = array();
             if ( $request->check == true)
-                $correo = 'Enviar Correo';
+                $correo['passwd'] = $request->pass;
 
+            
+            $correo['cliente'] = $form;
+            $correo['correo'] = $request->correo;
+            $correo['passwd'] = $request->pass;
+            $correo['estado'] = $stc[$form->cli_estado];
+            if ( $request->check == true)
+                Mail::to($usuario->email)->send( new EmailSendClienteNewB($correo));
+            else
+                Mail::to($usuario->email)->send( new EmailBienvenidoClienteNewB($correo));
         // Editando Cliente
         } else if ( $request->sw == 1) {
             $form = Clientes::find($id);
@@ -129,6 +153,7 @@ class ClientesController extends Controller
             }
 
             if ( $correo != $request->correo ) {
+                $changeMail = 1;
                 $correo = User::where('email', '=', $request->correo )->count();
                 if ( $correo == 1 ) {
                     $data[0] = 0;
@@ -140,6 +165,7 @@ class ClientesController extends Controller
             $form->cli_razon = $request->razonsocial;
             $form->cli_cuit = $request->dni;
             $form->cli_direccion = $request->direccion;
+            $form->cli_entre_calles = $request->entre_calles;
             $form->cli_telefono = $request->telefono;
             $form->cli_whatsapp = $request->whatsapp;
             $form->cli_cod_postal = $request->cod_postal;
@@ -155,9 +181,16 @@ class ClientesController extends Controller
 
             $user = User::where('id','=', $request->usr_id)->first();
             $user->name = $request->razonsocial;
-            $user->email = $request->correo;
-           // $user->api_token = Str::random(50);
-            $user->update();
+            if ( $changeMail == 1) {
+                $user->email = $request->correo;
+                $user->correoOk = 0;
+                $user->email_verified_at = null;
+                $user->update();
+                if ( $request->check == true)
+                    ClientesControllerW::enviar_email_verificador($user->id);
+            } else {
+                $user->update();
+            }
 
             $data[0] = 1;
             $data[1]="Registro Satifactorio";

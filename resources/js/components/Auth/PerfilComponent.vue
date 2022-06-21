@@ -72,7 +72,23 @@
                         <v-col v-if="correoOk == null" cols="12" sm="12" md="12">
                             <p>{{$t('m.reg_ok1')}} : <strong>{{usuario.correo}}</strong> </p>
                             <p>{{$t('m.reg_ok2')}} [  <strong>{{$t('m.reg_ok3')}}</strong> ]</p>
+                            <v-row>
+                                <v-col cols="6" sm="6" md="6">
+                                    <v-text-field v-model.trim="$v.codigo.$model"
+                                            :label="this.$t('m.code')"
+                                            :error-messages="codigoErrors"
+                                            @input="$v.codigo.$touch()"
+                                            @blur="$v.codigo.$touch()"
+                                            type="text"
+                                            outlined
+                                    ></v-text-field>
+                                </v-col>
+                                <v-col cols="3" sm="3" md="3">
+                                    <v-btn class="mt-3" color="success" small @click=" validarEmail">{{$t('m.validate_mail')}}</v-btn>
+                                </v-col>
+                            </v-row>
                         </v-col>
+                        
 
                         <v-col v-if="st == 0" cols="12" sm="12" md="12">
                             <p>{{$t('m.reg_ok4')}}</p>
@@ -133,6 +149,7 @@
 
                     <v-btn class="mr-4 mt-3" @click="editarUsuario(usuario)" color="blue" dark > {{this.$t('m.save')}} </v-btn>
                     <v-btn class="mr-4 mt-3" @click="passwordModal=true" color="green" dark > {{this.$t('m.password_change')}} </v-btn>
+                    
                 </v-card-text> 
             </form>
         </v-card> 
@@ -165,6 +182,8 @@ export default {
             txtData: '',
             formData: {id:'', cuit:'', razon:'', telefono:'', address:'', correo:'', fecEntrega: '', fecha: ''},
             date: new Date(), 
+            codigo: '',
+            xx: '',
         }
     },
 
@@ -194,11 +213,26 @@ export default {
                 this.formData.fecha = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate()).toISOString().substr(0, 10)
                 const parsed = JSON.stringify(this.formData)
                 localStorage.setItem(this.txtData, parsed)
+               
             })
+    },
+
+    mounted() {
+        
+        this.xx = this.$session.get('u-tipo')
     },
 
 
     computed: {
+        codigoErrors() {
+            const errors = []
+            if (!this.$v.codigo.$dirty) return errors
+            !this.$v.codigo.maxLength && errors.push(this.$t('m.max_lenght_error'))
+            !this.$v.codigo.minLength && errors.push(this.$t('m.min_lenght_error'))
+            !this.$v.codigo.required && errors.push(this.$t('m.required_error'))
+            return errors
+        },
+
         nombreErrors() {
             const errors = []
             if ( !this.$v.usuario.nombre.$dirty ) return errors
@@ -247,8 +281,48 @@ export default {
     methods: {
 
         sendMail() {
-            axios.post('/email/verification-notification')
-                
+            axios.get(`/email/verify/${this.usuario.id}`)
+                .then((res) => {
+                    if ( res.data[0] == 1) {
+                        this.color = 'bg-success'
+                    } else {
+                        this.color = 'bg-danger'
+                        
+                    }
+                    this.text = res.data[1]
+                })
+                .catch( error => {
+                    this.color = 'bg-danger'
+                    text = error
+                })
+                this.snackbar = true
+        },
+
+        validarEmail() {
+            const param = {codigo: this.codigo}
+            axios.post('/validar-email', param)
+                .then((res) => {
+                    if ( res.data[0] == 1) {
+                        this.correoOk = res.data[2];
+                        this.text = this.$t('m.validate_mail_ok')
+                        this.color = 'bg-success'
+                        if ( this.st  == 0 || this.correoOk == null)
+                            this.ok = 0
+                        else {
+                            this.ok = 1
+                            this.$session.set('u-st',this.ok);
+                            window.location.href = "/perfil";
+                        }
+                    }else {
+                        this.text = this.$t('m.validate_mail_error')
+                        this.color = 'bg-orange'
+                    }
+                })
+                .catch ( error => {
+                    this.text = error // this.$t('m.validate_mail_error')
+                    this.color = 'bg-danger'
+                })
+                this.snackbar = true
         },
 
         sendCodigo() {
@@ -355,6 +429,12 @@ export default {
 
         repeartpassword: {
             sameAs: sameAs('pass')
+        },
+
+        codigo: {
+            required,
+            minLength : minLength(6),
+            maxLength : maxLength(6)
         },
     }
 }

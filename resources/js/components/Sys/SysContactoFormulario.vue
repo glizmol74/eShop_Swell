@@ -16,6 +16,8 @@
                                 class="mb-0 pb-0 caption"
                                 hide-details
                                 :items="destinatario_es"
+                                    item-text="text"
+                                    item-value="val"
                                 filled
                             ></v-select>
                             <v-select 
@@ -32,7 +34,7 @@
                                 filled
                             ></v-select>
                         </v-col>
-
+                       
                         <v-col cols="12">
                             <v-text-field
                                 v-model="$v.datos.fname.$model"
@@ -129,17 +131,36 @@ export default {
           telefono: '',
           comentarios: '',
       },
-      destinatario_es: ['Atención al Cliente', 'Atención a Proveedores', 'Administración', 'Soporte'],
-      destinatario_en: ['Customer Support', 'Attention to Providesers', 'Administration', 'Support'],
+      destinatario_es: [
+        {text: 'Atención al Cliente',val:0},  
+        {text: 'Atención a Proveedores', val:1},
+        {text: 'Administración', val:2},
+        {text: 'Soporte', val:3}],
+      destinatario_en: [
+        {text: 'Customer Support', val:0},
+        {text: 'Attention to Providesers', val:1},
+        {text: 'Administration', val:2},
+        {text: 'Support', val:3}],
 
       xcolor: 'green',
       snackbar: false,
       text: '',
       correoc: 'xx',
+      correos:[],
     }),
 
     created() {
         this.correoc = this.$session.get('correo_c');
+        this.correos.push(this.$session.get('correo_ventas'))
+        this.correos.push(this.$session.get('correo_compras')) 
+        this.correos.push(this.$session.get('correo_admin')) 
+        this.correos.push(this.$session.get('correo_soporte')) 
+    },
+
+    watch: {
+        'datos.preguntas': function() {
+         this.correoc =  this.correos[this.datos.preguntas]
+        }
     },
 
     computed: {
@@ -187,12 +208,19 @@ export default {
     },
 
     methods: {
+      
         enviarForm() {
+            let destinatario = ''
             this.text = this.$v.datos.$pending + ' | ' + this.$v.datos.$error;
             this.$v.datos.$touch();
             if ( this.$v.datos.$pending || this.$v.datos.$error ) return;
+            if ( this.$i18n.locale ==='es') {
+                destinatario = this.destinatario_es[this.datos.preguntas].text
+            } else {
+                destinatario = this.destinatario_en[this.datos.preguntas].text
+            }
             const params = {
-                            pregunta: this.datos.preguntas,
+                            pregunta: destinatario,
                             name: this.datos.fname,
                             email: this.datos.email,
                             telefono: this.datos.telefono,
@@ -204,7 +232,7 @@ export default {
                     this.text = this.$t('m.form_success')
                     this.xcolor = 'success'
                     this.snackbar = true
-                    this.datos = {preguntas: '', name:'', email:'', telefono:'',comentarios:''}
+                    this.datos = {preguntas: '', name:'', email:'', telefono:'', comentarios:''}
                 })
                 .catch( error => {
                     console.log(error.response)

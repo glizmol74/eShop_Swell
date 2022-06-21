@@ -112,7 +112,8 @@
               </div>
 
               <v-divider class="mx-4 grey lighten-2"></v-divider>
-              <v-card-text>
+              <!--Desabilitado momentaneamente el registro de Usuarios desde la web-->
+              <!-- <v-card-text>
                 <div class="subtitle-1 font-weight-light">
                     <p>¿No tenés un usuario?&nbsp;
                         <span class="font-italic text-danger">
@@ -121,7 +122,7 @@
                         </span>
                     </p>
                 </div>
-              </v-card-text> 
+              </v-card-text>  -->
             </v-card>
           </v-col>
         </v-row>

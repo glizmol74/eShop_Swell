@@ -10,7 +10,7 @@ use App\Models\Sys\Tienda\Clientes;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 
-class User extends Authenticatable implements MustVerifyEmail, JWTSubject
+class User extends Authenticatable implements  JWTSubject
 {
     use HasFactory, Notifiable;
 
@@ -40,6 +40,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         'name',
         'email',
         'password',
+        'correoOk',
     ];
 
     /**

@@ -20,7 +20,7 @@ Auth::routes();
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/email/verify', function() { 
+/*Route::get('/email/verify', function() { 
         
         return view('auth.verify');
     })->middleware('auth')->name('verification.notice');
@@ -32,7 +32,9 @@ Route::post('/email/verification-notification', function(Request $request) {
     $request->user()->sendEmailVerificationNotification();
     return back()->with('message', 'Verificación Link Enviada!...');
 })->middleware(['auth','throttle:6,1'])->name('verification.send');
+*/
 
+Route::get('/email/verify/{id}', 'App\Http\Controllers\Sys\Tienda\ClientesControllerW@enviar_email_verificador')->middleware(['auth']);
 Route::get('/mcategorias/all','App\Http\Controllers\HomeController@allcat');
 Route::get('/sliders','App\Http\Controllers\HomeController@sliders');
 Route::get('/imgc/{id}','App\Http\Controllers\HomeController@image_c');
@@ -62,6 +64,7 @@ Route::get('/envio','App\Http\Controllers\HomeController@envio');
 Route::get('/product/destacados', 'App\Http\Controllers\Sys\Tienda\ProductosController@destacados');
 
 
+
 Route::get('/econtacto','App\Http\Controllers\HomeController@contacto');
 Route::get('/suscripcion','App\Http\Controllers\HomeController@suscripcion');
 Route::get('/provincia','App\Http\Controllers\HomeController@provincia');
@@ -69,7 +72,8 @@ Route::get('/localidad/{id}','App\Http\Controllers\HomeController@localidad');
 
 
 Route::apiResource('productos', 'App\Http\Controllers\Sys\Tienda\ProductosController');
-
+Route::post('/buscador','App\Http\Controllers\Sys\Tienda\ProductosController@buscador');
+Route::post('/validar-email', 'App\Http\Controllers\Auth\ProfileController@validar_correo')->middleware(['auth']);
 
 
 Route::post('downloads/{id}','App\Http\Controllers\Api\StaticController@download')->middleware('auth');

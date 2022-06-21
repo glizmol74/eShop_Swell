@@ -926,6 +926,12 @@ class Sliders extends Seeder
                 'bib_url' => '/storage/images/tienda/art/Bobina_Elegante_1035_Papel_Toalla_200x20.jpg',
                 'bib_add' => '1',
             ]); //151
+
+            DB::table('bibliotecas')->insert([
+                'bib_nombre' => 'Quita_Grafitti.jpg',
+                'bib_url' => '/storage/images/tienda/Quita_Grafitti.jpg',
+                'bib_add' => '1',
+            ]); //152
         }
 
         
@@ -933,23 +939,7 @@ class Sliders extends Seeder
         DB::table('pagina_homes')->truncate();
         // Banner
         if (1 == 1) {
-            DB::table('pagina_homes')->insert([
-                'sli_tipo' => '1',
-                'sli_posicion' => '0',
-                'sli_extra' => 'Banner Home 1',
-                'sli_align' => 'center',
-                'sli_justify' => 'start',
-                'sli_padding' => '1% 1%',
-                'sli_margin' => '20% 0% 0% 5%',
-                'sli_background_text' => '#FFFFFF80',
-                'sli_text_es' => 'La limpieza de tu hogar en buenas manos',
-                'sli_text_en' => 'Cleaning your home in good hands',
-                'sli_class' => 'display-1 font-weight-light',
-                'sli_colortext' => '#000000FF',
-                'sli_color' => '#FFFFFFFF',
-                'sli_imagen' => 3,
-                'sli_add' => 1,
-            ]);
+        
     
             DB::table('pagina_homes')->insert([
                 'sli_tipo' => '1',
@@ -966,6 +956,24 @@ class Sliders extends Seeder
                 'sli_colortext' => '#000000FF',
                 'sli_color' => '#FFFFFFFF',
                 'sli_imagen' => 7,
+                'sli_add' => 1,
+            ]);
+
+            DB::table('pagina_homes')->insert([
+                'sli_tipo' => '1',
+                'sli_posicion' => '0',
+                'sli_extra' => 'Banner Home 1',
+                'sli_align' => 'center',
+                'sli_justify' => 'start',
+                'sli_padding' => '1% 1%',
+                'sli_margin' => '20% 0% 0% 5%',
+                'sli_background_text' => '#FFFFFF80',
+                'sli_text_es' => 'La limpieza de tu hogar en buenas manos',
+                'sli_text_en' => 'Cleaning your home in good hands',
+                'sli_class' => 'display-1 font-weight-light',
+                'sli_colortext' => '#000000FF',
+                'sli_color' => '#FFFFFFFF',
+                'sli_imagen' => 3,
                 'sli_add' => 1,
             ]);
     
@@ -1030,7 +1038,7 @@ class Sliders extends Seeder
             DB::table('pagina_homes')->insert([
                 'sli_tipo' => '2',
                 'sli_posicion' => '2',
-                'sli_extra' => '/category/Detergente y Productos Para Vajilla',
+                'sli_extra' => '/category/Productos%20Liquidos',
                 'sli_align' => '6',
                 'sli_justify' => '',
                 'sli_padding' => '',

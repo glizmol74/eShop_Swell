@@ -9,6 +9,7 @@ use App\Models\Sys\Tienda\Categorias;
 use App\Models\Sys\Tienda\Productos_categorias;
 use App\Models\Sys\Tienda\Productos_atributos;
 use App\Http\Controllers\HomeController;
+use Illuminate\Support\Arr;
 
 class ProductosController extends Controller
 {
@@ -117,6 +118,32 @@ class ProductosController extends Controller
         }
     }
 
+    public function buscador(Request $request)
+    {
+        if ( (isset($_GET['tipo'])) && ($_GET['tipo'] != "")) 
+                $tipo = $_GET['tipo'];
+            else
+                $tipo = 0;
+        $data = array();
+        if ( $request->idioma == 'es'){
+            $prods = Productos::where('pro_estado', '=', 1)->select('id', 'pro_es_nombre as txt')->orderBy('pro_es_nombre', 'ASC')->get();
+        } else {
+            $prods = Productos::where('pro_estado', '=', 1)->select('id', 'pro_en_nombre as txt')->orderBy('pro_en_nombre', 'ASC')->get();
+        }
+
+        foreach($prods as $key => $value) {
+            $ele = array();
+            $ele['id'] = $value['id'];
+            $ele['txt'] = $value['txt'];
+            $ele['val'] = 'products/' .$value['id'] . '?tipo=' . $tipo;
+            $data[] = $ele;
+        }
+
+        return $data;
+            
+    }
+
+    
     public function show($id)
     {
         $data = array();

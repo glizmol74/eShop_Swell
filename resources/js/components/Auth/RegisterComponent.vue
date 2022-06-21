@@ -81,6 +81,19 @@
                             filled
                             ></v-text-field>
                         </v-col>
+                        
+                        <v-col cols="12" md="6">
+                            <v-text-field
+                            v-model.trim="$v.datos.cli_email.$model"
+                            :error-messages="cli_emailErrors"
+                            @input="$v.datos.cli_email.$touch()"
+                            @blur="$v.datos.cli_email.$touch()"
+                            :counter="50"
+                            :label="this.$t('m.email')"
+                            filled
+                            ></v-text-field>
+                        </v-col>
+
                         <v-col cols="12" md="6">
                             <v-text-field
                             v-model.trim="$v.datos.cli_direccion.$model"
@@ -92,15 +105,12 @@
                             filled
                             ></v-text-field>
                         </v-col>
-                        <v-col cols="12" md="6">
+
+                        <v-col cols="12" md="12">
                             <v-text-field
-                            v-model.trim="$v.datos.cli_email.$model"
-                            :error-messages="cli_emailErrors"
-                            @input="$v.datos.cli_email.$touch()"
-                            @blur="$v.datos.cli_email.$touch()"
-                            :counter="50"
-                            :label="this.$t('m.email')"
-                            filled
+                                v-model.trim="entre_calles"
+                                :label="this.$t('m.between_streets')"
+                                filled
                             ></v-text-field>
                         </v-col>
 
@@ -135,8 +145,10 @@
                         </v-col>
 
                         <v-col cols="12">
-                            <p>Promedio de Compra Aproximada Mensual ( {{tipo_clientes[radios] || ''}} )</p>
-                            <v-radio-group v-model="radios" mandatory>
+                            <p>Promedio de Compra Aproximada Mensual (<b> {{tipo_clientes[this.datos.cli_tipo] || ''}} </b> ) </p>
+                            <v-radio-group v-model="$v.datos.cli_tipo.$model"
+                                :error-messages="tipoErrors"
+                             >
                                 <v-radio label="Entre $ 2.500,00  Y  $ 19.999,99" value="5"></v-radio>
                                 <v-radio label="Entre $ 20.000,00  Y  $ 79.999,99" value="4"></v-radio>
                                 <v-radio label="Entre $ 80.000,00  Y  $ 249.999,99" value="3"></v-radio>
@@ -202,10 +214,11 @@
                 cli_razon: '',
                 cli_cuit: '',
                 cli_direccion: '',
+                cli_entre_calles: '',
                 cli_telefono: '',
                 cli_whatsapp: '',
                 cli_saldo: 0,
-                cli_tipo: 5,
+                cli_tipo: '',
                 cli_cod_postal: '',
                 cli_pais: '1',
                 cli_provincia: '',
@@ -222,7 +235,8 @@
             prov_disable: true,
             local_disable: true,
             snackbar: false,
-            text: 'aa',
+            text: '',
+            entre_calles: '',
             typeAlert: 'sucess',
         }),
 
@@ -237,7 +251,11 @@
             },
             'radios' : function(newVal, oldVal) {
                 this.datos.cli_tipo = this.radios
-            }
+            },
+
+            'entre_calles' : function(newVal, oldVal) {
+                this.datos.cli_entre_calles = this.entre_calles
+            },
         },
 
         created() {
@@ -328,7 +346,15 @@
                 if (!this.$v.datos.cli_passok.$dirty) return errors
                 this.$v.datos.cli_passok.sameAs && errors.push(this.$t('m.password_ok'))
                 return errors
-            }
+            },
+
+            tipoErrors() {
+                const errors = []
+                if (!this.$v.datos.cli_tipo.$dirty) return errors
+                !this.$v.datos.cli_tipo.numeric && errors.push(this.$t('m.message_numeric'))
+                !this.$v.datos.cli_tipo.required && errors.push(this.$t('m.required_error'))
+                return errors
+            },
 
         },
 
@@ -336,7 +362,12 @@
             Enviar(){
                 this.text = this.$v.datos.$pending + ' | ' + this.$v.datos.$error;
                 this.$v.datos.$touch();
-                if (this.$v.datos.$pending || this.$v.datos.$error) return;
+                if (this.$v.datos.$pending || this.$v.datos.$error) { 
+                    this.text = "Complete todos los campos solicitados"
+                    this.color = "bg-danger"
+                    this.snackbar = true
+                    setTimeout(() => { this.snackbar = false }, 4500);
+                    return;} 
                 this.text = this.text + ' | Envio de Formulario Cliente Nuevo';
                 const params_ok = {email: this.datos.cli_email, password: this.datos.cli_pass}
                 const params = {
@@ -344,6 +375,7 @@
                     cli_razon: this.datos.cli_razon,
                     cli_cuit: this.datos.cli_cuit,
                     cli_direccion: this.datos.cli_direccion,
+                    cli_entre_calles: this.datos.cli_entre_calles,
                     cli_telefono: this.datos.cli_telefono,
                     cli_whatsapp: this.datos.cli_whatsapp,
                     cli_saldo: this.datos.cli_saldo,
@@ -373,6 +405,7 @@
                             this.datos.cli_razon = ''
                             this.datos.cli_cuit = ''
                             this.datos.cli_direccion = ''
+                            this.datos.cli_entre_calles = ''
                             this.datos.cli_telefono = ''
                             this.datos.cli_whatsapp = ''
                             this.datos.cli_cod_postal = ''
@@ -380,12 +413,14 @@
                             this.datos.cli_email = ''
                             this.datos.cli_passok = ''
                             this.datos.cli_pass = ''
+                            this.datos.cli_tipo = ''
+                            this.entre_calles = '' 
                             this.$v.$reset()
                             this.snackbar = true;
                             setTimeout(() => { this.snackbar = false }, 4500);
                             axios.post('/login', params_ok)
-                              .then ((res)=> {
-                                    axios.post('/email/verification-notification')
+                              .then ((res)=> { 
+                                   // axios.post('/email/verification-notification')
                                     window.location.href = "/perfil";
                                 })
                         }
@@ -413,6 +448,8 @@
                 this.datos.email = ''
                 this.datos.cli_passok = ''
                 this.datos.cli_pass = ''
+                this.cli_tipo = ''
+                this.entre_calles = ''
             },
         },
 
@@ -465,6 +502,10 @@
                     numeric,
                     maxLength: maxLength(50)
                 },
+                cli_tipo: {
+                    required,
+                    numeric
+                }
             },
 
         },

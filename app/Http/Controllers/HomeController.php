@@ -65,7 +65,8 @@ class HomeController extends Controller
 
     public function contacto()
     {
-        $contacto = Empresas::select('emp_direccion as address','emp_whatsapp as whatsapp', 'emp_email as mail', 'emp_mapa as maps','emp_telefono as phone')->first();
+        $contacto = Empresas::select('emp_direccion as address','emp_whatsapp as whatsapp', 'emp_email as mail', 'emp_mapa as maps','emp_telefono as phone',
+                                     'emp_admin as mail_admin', 'emp_ventas as mail_ventas', 'emp_compras as mail_compras', 'emp_soporte as mail_soporte')->first();
         $contacto->whatsapp = 'https://wa.me/54'.$contacto->whatsapp.'?text=Hola';
         return $contacto;
     }
@@ -222,6 +223,7 @@ class HomeController extends Controller
         $children = Categorias::where('cat_padre','=',$categoria->id)
                                     ->select('id','cat_es_name as es_name', 'cat_en_name as en_name', 'cat_padre as padre')
                                     ->orderby('cat_padre', 'ASC')
+                                    ->orderby('cat_posicion', 'ASC')
                                     ->orderby('cat_es_name', 'ASC')
                                     ->get();
 

@@ -664,7 +664,18 @@ class Productos extends Seeder
             'pro_estado' => 1,
             'pro_destacado' => 0,
             'pro_imagen_ppal' => null
-        ]); //59
+             ]); //59
+
+            DB::table('productos')->insert(['pro_es_nombre' => 'Quita Grafitis',
+                'pro_en_nombre' => 'Graffiti Remover',
+                'pro_es_descripcion_larga' => '',
+                'pro_en_descripcion_larga' => '',
+                'pro_tipo' => 1,
+                'pro_ficha' => null,
+                'pro_estado' => 1,
+                'pro_destacado' => 0,
+                'pro_imagen_ppal' => 152
+            ]); //60
 
 
         }
@@ -1776,6 +1787,24 @@ class Productos extends Seeder
             DB::table('productos_categorias')->insert([
                 'pca_producto' => 59,
                 'pca_categoria' => 33,
+                'pca_add' => 1
+            ]);
+
+            DB::table('productos_categorias')->insert([
+                'pca_producto' => 60,
+                'pca_categoria' => 2,
+                'pca_add' => 1
+            ]);
+
+            DB::table('productos_categorias')->insert([
+                'pca_producto' => 60,
+                'pca_categoria' => 12,
+                'pca_add' => 1
+            ]);
+
+            DB::table('productos_categorias')->insert([
+                'pca_producto' => 60,
+                'pca_categoria' => 57,
                 'pca_add' => 1
             ]);
         }
@@ -5285,6 +5314,48 @@ class Productos extends Seeder
                 'pat_precio_esp' => 146.58,
                 'pat_precio_dst' => 112.75,
                 'pat_cod_tempo' => 'ISE57',
+                'pat_estado' => 1,
+                'pat_orden' => 4,
+                'pat_add' => 1
+            ]);
+
+            DB::table('productos_atributos')->insert([
+                'pat_prod' => 60,
+                'pat_attr' => 4,
+                'pat_imagen' => null,
+                'pat_precio_usr' => 769.85,
+                'pat_precio_emp' => 577.39,
+                'pat_precio_esp' => 500.40,
+                'pat_precio_dst' => 384.93,
+                'pat_cod_tempo' => '711',
+                'pat_estado' => 1,
+                'pat_orden' => 2,
+                'pat_add' => 1
+            ]);
+
+            DB::table('productos_atributos')->insert([
+                'pat_prod' => 60,
+                'pat_attr' => 6,
+                'pat_imagen' => 152,
+                'pat_precio_usr' => 6057.81,
+                'pat_precio_emp' => 4543.36,
+                'pat_precio_esp' => 3937.58,
+                'pat_precio_dst' => 3028.91,
+                'pat_cod_tempo' => '00120',
+                'pat_estado' => 1,
+                'pat_orden' => 1,
+                'pat_add' => 1
+            ]);
+
+            DB::table('productos_atributos')->insert([
+                'pat_prod' => 60,
+                'pat_attr' => 8,
+                'pat_imagen' => null,
+                'pat_precio_usr' => 1158.08,
+                'pat_precio_emp' => 868.56,
+                'pat_precio_esp' => 752.75,
+                'pat_precio_dst' => 579.04,
+                'pat_cod_tempo' => 'ISE77',
                 'pat_estado' => 1,
                 'pat_orden' => 4,
                 'pat_add' => 1

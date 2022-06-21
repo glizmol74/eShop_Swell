@@ -7,7 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use App\Models\User;
+use App\Http\Controllers\Sys\Tienda\ClientesControllerW;
 use App\Models\Sys\Tienda\Clientes;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EmailSendClienteNew;
+
 
 class ClientesController extends Controller
 {
@@ -33,6 +37,7 @@ class ClientesController extends Controller
                                     'cli_razon as razonsocial',
                                     'cli_cuit as dni',
                                     'cli_direccion as direccion',
+                                    'cli_entre_calles as entre_calles',
                                     'cli_telefono as telefono',
                                     'cli_whatsapp as whatsapp',
                                     'cli_saldo as saldo',
@@ -51,7 +56,9 @@ class ClientesController extends Controller
     public function store(Request $request)
     {
         $data = array();
+    
         $id = $request->id;
+        $changeMail = 0;
         if ( $request->sw == 1) {
             $user = User::find(auth()->id())->id;
             $correo = User::find(auth()->id())->email;
@@ -76,6 +83,8 @@ class ClientesController extends Controller
             }
 
             if ( $correo != $request->correo ) {
+                
+                $changeMail = 1;
                 $correo = User::where('email', '=', $request->correo )->count();
                 if ( $correo == 1 ) {
                     $data[0] = 0;
@@ -87,6 +96,7 @@ class ClientesController extends Controller
             $form->cli_razon = $request->razonsocial;
             $form->cli_cuit = $request->dni;
             $form->cli_direccion = $request->direccion;
+            $form->cli_entre_calles = $request->entre_calles;
             $form->cli_telefono = $request->telefono;
             $form->cli_whatsapp = $request->whatsapp;
             $form->cli_cod_postal = $request->cod_postal;
@@ -97,12 +107,26 @@ class ClientesController extends Controller
 
             $user = User::where('id','=', $request->usr_id)->first();
             $user->name = $request->razonsocial;
-            $user->email = $request->correo;
-            $user->update();
+             // se envia correo validacion si se cmbia el correo registrado
+             if ( $changeMail ==  1) {
+                
+                $user->email_verified_at = null; 
+                $user->correoOk = 0;
+                $user->email = $request->correo;
+                $user->update();    
+                ClientesControllerW::enviar_email_verificador($user->id);
+            }else {
+                $user->update();
+            }
+            
+            
 
             $data[0] = 1;
             $data[1]="Registro Satifactorio";
             $data[2] = $this->data();
+            $data[3] = $user->correoOk;
+
+           
         } else if ( $request->sw == 2) {
             $user = User::where('id','=', $id)->first();
             $form = Clientes::where('cli_user', '=', $id)->first();

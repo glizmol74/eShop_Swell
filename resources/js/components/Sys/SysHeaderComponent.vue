@@ -94,10 +94,22 @@
                   <!--  <li class="nav-item subtitle-1" id="mayoristas">
                         <a class="nav-link text-uppercase" href="/mayoristas">{{$t('m.reseller')}}</a>
                     </li> -->
+                    
                     <li class="nav-item subtitle-1" id="contacto">
                         <a class="nav-link text-uppercase" href="/contacto">{{$t('m.contact')}}  </a>
                     </li>
 
+                    <li class="nav-item ">
+                        <v-autocomplete
+                            v-model="buscador"
+                            :label="this.$t('m.search')"
+                            :items="items_buscador"
+                                item-text="txt"
+                                item-value="val"
+                            dense
+                            outlined
+                        ></v-autocomplete>
+                    </li>
                 </ul>
 
                 <v-spacer></v-spacer>
@@ -164,7 +176,7 @@ export default {
             drawer: false,
             items: [],
             buscador: [],
-            items_buscador: false,
+            items_buscador: [],
             ver_buscador: false,
             fav: true,
             message: false,
@@ -174,12 +186,14 @@ export default {
         };
     },
     created() {
+
         this.$idioma = this.$session.get("idioma"),
-            this.$i18n.locale = this.$session.get("idioma"),
-            axios.get("/mcategorias/all")
-                .then((res) => {
-                this.hmenus = res.data;
-            });
+        this.$i18n.locale = this.$session.get("idioma"),
+        axios.get("/mcategorias/all")
+            .then((res) => {
+            this.hmenus = res.data;
+        });
+       
     },
     mounted() {
         // this.ltemp = this.$session.getAll() 
@@ -202,7 +216,19 @@ export default {
             this.$idioma = this.$session.get("idioma"),
                 this.$i18n.locale = this.$idioma;
         }
+         const param = {tipo: 0, idioma: this.$i18n.locale }
+        axios.post('/buscador', param)
+            .then((res) => {
+                this.items_buscador = res.data
+            })
     },
+
+    watch: {
+        buscador(){
+            window.location.href= '/'+this.buscador
+        }
+    },
+
     methods: {
         changeDrawer(id) {
             this.drawer = id;
