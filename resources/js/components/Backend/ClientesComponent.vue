@@ -322,7 +322,7 @@
                          {{this.$t('m.cancel')}} 
                     </v-btn>
                 </v-row>
-                <v-row><v-col cols="12"> {{ this.check }} </v-col></v-row>
+                <!-- <v-row><v-col cols="12"> {{ this.check }} </v-col></v-row> -->
             </v-card-text> 
         </v-card>
 
@@ -605,7 +605,7 @@ export default {
             this.nc = true
             this.usuario.saldo = 0
             this.editando = false
-            this.usuario.estado = 1
+            this.usuario.estado = 0
         },
 
         alta() {
