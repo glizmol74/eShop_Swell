@@ -2,7 +2,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 INSERT INTO grupo_jac.localidads (loc_nombre, loc_provincia, loc_comuna, loc_codigo_postal) 
 SELECT l.loc_nombre, l.loc_provincia, l.loc_comuna, l.loc_codigo_postal FROM  swell.localidads AS l
 
-/*
+
 UPDATE localidads set loc_nombre = CONCAT('RECOLETA - C', loc_codigo_postal ) where loc_comuna = 2 ;
 UPDATE localidads set loc_nombre = CONCAT('PALERMO - C', loc_codigo_postal ) where loc_comuna = 14 ;
 UPDATE localidads set loc_nombre = CONCAT('AGRONOMIA - C', loc_codigo_postal ) where loc_comuna = 15 ;
@@ -375,5 +375,3 @@ UPDATE localidads set loc_nombre = CONCAT('MONTE CASTRO - C', loc_codigo_postal 
  ('PARQUE SOLDATI - C1437', 4, 8, 1437),
 
 SELECT * FROM `localidads` WHERE loc_provincia = 4
-
-*/

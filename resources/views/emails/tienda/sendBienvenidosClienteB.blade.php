@@ -12,7 +12,7 @@
         <p> </p>
         <p>  Nuestra Misión es hacer llegar productos de alta calidad y confiabilidad a cada cliente, facilitando la operación con cada uno de ellos.</p>
         <br />
-        <p>  Agregamos Valor en toda la cadena adaptándonos a -*las necesidades de nuestros clientes, brindandoles un excelente servicio. </p>
+        <p>  Agregamos Valor en toda la cadena adaptándonos a las necesidades de nuestros clientes, brindandoles un excelente servicio. </p>
         <br />
         <br />
         <p> </p>
