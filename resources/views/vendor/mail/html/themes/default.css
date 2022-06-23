@@ -265,6 +265,36 @@ img {
     color: black;
 }
 
+.button-eshop {
+    /* -webkit-text-size-adjust:auto;
+    text-decoration: none;
+    border: 1px solid red;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: white;
+    background-color: #ff78cb; */
+
+    text-decoration:none;
+    font-weight: 600;
+    font-size: 20px;
+    color:white;
+    padding-top:3px;
+    padding-bottom:3px;
+    padding-left:3px;
+    padding-right:3px;
+    background-color:#ff78cb;
+    border-color: #d8d8d8;
+    border-width: 3px;
+    border-style: solid;
+    border-radius:35px;
+}
+
 .button-green,
 .button-success {
     background-color: #48bb78;

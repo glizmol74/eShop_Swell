@@ -168,7 +168,7 @@ export const m =
     "welcome_l3": " If you want to start buying and / or selling our products, fill out the following form and then a representative of our team will contact you shortly. ",
     "welcome_l4": " Thank you! Swell's team ",
 
-    "about_l1": " is a company that has a history of 15 years in the manufacture of hygiene and cleaning products, with constant investments in technology and development of new products. We have high quality standards at very competitive prices.",
+    "about_l1": " is a company that has a history of 19 years in the manufacture of hygiene and cleaning products, with constant investments in technology and development of new products. We have high quality standards at very competitive prices.",
     "about_l2": " We are a company committed to the environment, the personal and professional development of those who make it up, constantly training us.",
     "about_l3": " We add value throughout the chain by adapting to the needs of our customers, providing them with excellent service. Initially we emphasized our productions and marketing in various industries throughout the country, achieving the expansion of our business by introducing ourselves in the channels of distributors, wholesalers and finally with a presence in the final consumer as well as in the export market.",
     "about_l4": " Our Mission is to bring high quality and reliable products to each client, facilitating the operation with each one of them.",

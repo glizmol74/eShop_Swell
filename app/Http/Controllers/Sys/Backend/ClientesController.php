@@ -192,8 +192,18 @@ class ClientesController extends Controller
                 $user->update();
             }
 
+            //prueba mail de bienvenida
+            $correo = array();
+            $correo['cliente'] = $form;
+            $correo['correo'] = $request->correo;
+            $correo['passwd'] = $request->pass;
+            
+            
+            Mail::to($user->email)->send( new EmailBienvenidoClienteNewB($correo));
+
+
             $data[0] = 1;
-            $data[1]="Registro Satifactorio";
+            $data[1]="Registro Actualizado Satifactorio";
             $data[2] = $this->data();
         // Eliminar un Cliente
         } else if ($request->sw == 3) {

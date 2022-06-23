@@ -149,14 +149,14 @@
                             </div>
                         </v-col>
                     </v-row>
-
-                    <v-row v-else class="">
+                    
+                    <!-- <v-row v-else class="">
                         <v-col xs="12" sm="12" md="6">
                             <div class="mx-2"  style="padding-top:10px">
                                <h3 > <a href="/login"> {{ $t('m.buy_now')}} </a> </h3>
                             </div>
                         </v-col>
-                    </v-row>
+                    </v-row> -->
                 </v-container>
             </v-col>
         </v-row>

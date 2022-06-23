@@ -168,7 +168,7 @@ export const m =
     "welcome_l3": " Si quiere comenzar a comprar y/o vender nuestros productos, complete el siguiente formulario y a continuación un representante de nuestro equipo se pondrá en contacto con usted a la brevedad. ",
     "welcome_l4": " Gracias! El Equipo de Swell ",
 
-    "about_l1": " es una empresa que cuenta con una trayectoria de 15 años en la fabricación de productos de higiene y limpieza, con constantes inversiones en tecnología y desarrollo de nuevos productos. Contamos con altos standards de calidad a precios muy competitivos.",
+    "about_l1": " es una empresa que cuenta con una trayectoria de 19 años en la fabricación de productos de higiene y limpieza, con constantes inversiones en tecnología y desarrollo de nuevos productos. Contamos con altos standards de calidad a precios muy competitivos.",
     "about_l2": " Somos una compañia comprometida con el medio ambiente, el desarrollo personal y profesional de quienes la componen capacitandonos constantemente.",
     "about_l3": " Agregamos valor en toda la cadena adaptándonos a las necesidades de nuestros clientes, brindandoles un excelente servicio. Inicialmente enfatizamos nuestras producciones y comercialización en diversas industrias de todo el pais, logrando la expansión de nuestro negocio introduciendonos en los canales de distribuidores, mayoristas y finalmente con presencia en el consumidor final como asi también en el mercado de exportación.",
     "about_l4": " Nuestra Misión es hacer llegar productos de alta calidad y confiabilidad a cada cliente, facilitando la operación con cada uno de ellos.",
