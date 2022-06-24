@@ -51,7 +51,7 @@
               </v-card-actions>
           </v-card>
           </v-dialog>
-      </v-row>
+      </v-row> 
 
       <v-container class="fill-height" fluid>
         <v-row align="center" justify="center" >
@@ -208,9 +208,9 @@ export default {
                     })
                     .catch(error => {
                         this.errorText= 'El usuario o la contraseña es incorrecta';
-                        this.errorText = error;
+                        //this.errorText = error;
                         this.error = true;
-                        setTimeout(() => this.error=false, 2000);
+                        setTimeout(() => this.error=false, 5000);
 
                     });
                 },

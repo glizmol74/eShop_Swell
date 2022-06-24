@@ -61,7 +61,8 @@
                         </v-col>
                     </v-row>
 
-                    <v-row v-if="pp > 0 && st == 1 && fichat != '' " class="mx-3">
+                    <!-- <v-row v-if="pp > 0 && st == 1 && fichat != '' " class="mx-3"> -->
+                    <v-row v-if=" fichat != '' " class="mx-3">
                         <v-col cols="12" md="12" style="margin-top:1px; padding:1px 10p">
                             <template>
                                 <v-chip color="blue" rounded dark class="m-2" @click="getDownload(fichat)"> {{$t('m.dficha_t')}} </v-chip>
@@ -149,7 +150,7 @@
                             </div>
                         </v-col>
                     </v-row>
-                    
+
                     <!-- <v-row v-else class="">
                         <v-col xs="12" sm="12" md="6">
                             <div class="mx-2"  style="padding-top:10px">
