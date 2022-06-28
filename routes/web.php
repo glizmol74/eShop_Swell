@@ -76,7 +76,7 @@ Route::post('/buscador','App\Http\Controllers\Sys\Tienda\ProductosController@bus
 Route::post('/validar-email', 'App\Http\Controllers\Auth\ProfileController@validar_correo')->middleware(['auth']);
 
 
-Route::post('downloads/{id}','App\Http\Controllers\Api\StaticController@download')->middleware('auth');
+Route::post('downloads/{id}','App\Http\Controllers\Api\StaticController@download');
 
 
 
